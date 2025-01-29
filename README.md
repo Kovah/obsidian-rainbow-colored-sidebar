@@ -1,0 +1,1 @@
+# Obsidian Rainbow Colored Sidebar
