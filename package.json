@@ -1,5 +1,5 @@
 {
-	"name": "obsidian-rainbow-colored-sidebar",
+	"name": "rainbow-colored-sidebar",
 	"version": "1.0.1",
 	"description": "Automatically color your sidebar like a rainbow. No configuration needed. 8 themes included.",
 	"main": "main.js",
