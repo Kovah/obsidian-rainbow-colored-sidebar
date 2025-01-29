@@ -38,7 +38,7 @@ jobs:
           cp main.js dist/
           cp manifest.json dist/
           cp styles.css dist/
-          cp LICENSE.md dist/
+          cp LICENSE dist/
           cp README.md dist/
 
       - uses: actions/upload-artifact@v4
