@@ -72,7 +72,7 @@ Obsidian Rainbow Colored Sidebar
 @for $i from 1 through 16 {
 	$nth-selector: "#{16}n + #{($i - 1)}";
 
-	.nav-folder:nth-of-type(#{$nth-selector}) .nav-folder-title {
+	.nav-files-container > div > .nav-folder:nth-of-type(#{$nth-selector}) .nav-folder-title {
 		color: color-mix(
 				in srgb,
 				var(--rcs-color-#{$i}) var(--rcs-base-color-modifier),
@@ -100,7 +100,7 @@ Obsidian Rainbow Colored Sidebar
 		);
 	}
 
-	.nav-folder:nth-of-type(#{$nth-selector}) .tree-item-children {
+	.nav-files-container > div > .nav-folder:nth-of-type(#{$nth-selector}) .tree-item-children {
 		--nav-indentation-guide-color: color-mix(
 				in srgb,
 				var(--rcs-color-#{$i}) var(--rcs-indent-color-modifier),
@@ -108,7 +108,7 @@ Obsidian Rainbow Colored Sidebar
 		);
 	}
 
-	.nav-folder:nth-of-type(#{$nth-selector}) .tree-item-children .nav-file-title {
+	.nav-files-container > div > .nav-folder:nth-of-type(#{$nth-selector}) .tree-item-children .nav-file-title {
 		color: color-mix(
 				in srgb,
 				var(--rcs-color-#{$i}) var(--rcs-base-color-modifier),
