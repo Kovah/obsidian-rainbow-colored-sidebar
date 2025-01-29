@@ -43,6 +43,6 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: obsidian-wakatime-wakapi-${GITHUB_REF#refs/tags/}
+          name: rainbow-colored-sidebar-${GITHUB_REF#refs/tags/}
           retention-days: 7
           path: dist
