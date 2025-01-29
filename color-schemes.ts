@@ -150,6 +150,25 @@ export const csSummerVibes = [
 	'#fa2b37',
 ];
 
+export const csA11y = [
+	'#7dcf02',
+	'#00bc7c',
+	'#00b8db',
+	'#2a7fff',
+	'#ad46ff',
+	'#f6329b',
+	'#fa2b37',
+	'#fd9a02',
+	'#fa2b37',
+	'#f6329b',
+	'#ad46ff',
+	'#2a7fff',
+	'#00b8db',
+	'#00bc7c',
+	'#7dcf02',
+	'#00bc7c',
+];
+
 export const schemes: { [key: string]: string[] } = {
 	csDefault,
 	csRed,
@@ -158,5 +177,6 @@ export const schemes: { [key: string]: string[] } = {
 	csBlue,
 	csMixed,
 	csBlueWave,
-	csSummerVibes
+	csSummerVibes,
+	csA11y
 };
