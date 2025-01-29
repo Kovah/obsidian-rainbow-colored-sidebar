@@ -1,0 +1,177 @@
+/*------------------------------------------------------------------------------
+Obsidian Rainbow Colored Sidebar
+------------------------------------------------------------------------------*/
+
+:root {
+	/* ================================ Colors ================================ */
+	--rcs-color-1: #7dcf02;
+	--rcs-color-2: #00c851;
+	--rcs-color-3: #00bc7c;
+	--rcs-color-4: #00bba7;
+	--rcs-color-5: #00b8db;
+	--rcs-color-6: #00a6f5;
+	--rcs-color-7: #2a7fff;
+	--rcs-color-8: #615fff;
+	--rcs-color-9: #ad46ff;
+	--rcs-color-10: #e12afb;
+	--rcs-color-11: #f6329b;
+	--rcs-color-12: #ff2056;
+	--rcs-color-13: #fa2b37;
+	--rcs-color-14: #ff6801;
+	--rcs-color-15: #fd9a02;
+	--rcs-color-16: #f0b102;
+
+	--rcs-highlight: #fff;
+	--rcs-shadow: #000;
+
+	--rcs-base-color-modifier: 100%;
+	--rcs-hover-color-modifier: 30%;
+	--rcs-border-focus-modifier: 40%;
+	--rcs-icon-color-modifier: 60%;
+	--rcs-indent-color-modifier: 20%;
+	--rcs-medium-contrast-modifier: 30%;
+	--rcs-bg-contrast-modifier: 20%;
+	--rcs-active-contrast-modifier: 10%;
+}
+
+/* Light Theme Specific Properties */
+.theme-light {
+	--rcs-contrast-color: var(--rcs-shadow);
+	--rcs-default-text-color: var(--rcs-shadow);
+}
+
+/* Dark Theme Specific Properties */
+.theme-dark {
+	--rcs-contrast-color: var(--rcs-highlight);
+	--rcs-default-text-color: var(--rcs-highlight);
+	--rcs-base-color-modifier: 90%;
+	--rcs-bg-contrast-modifier: 30%;
+	--rcs-active-contrast-modifier: 20%;
+}
+
+/* Accessibility overrides for light and dark theme */
+:root[data-rcs-a11y] .theme-light {
+	--rcs-base-color-modifier: 80%;
+	--rcs-hover-color-modifier: 30%;
+	--rcs-bg-contrast-modifier: 30%;
+	--rcs-active-contrast-modifier: 20%;
+	--rcs-indent-color-modifier: 40%;
+	--rcs-icon-color-modifier: 80%;
+}
+
+:root[data-rcs-a11y] .theme-dark {
+	--rcs-base-color-modifier: 70%;
+	--rcs-hover-color-modifier: 20%;
+	--rcs-bg-contrast-modifier: 40%;
+	--rcs-active-contrast-modifier: 30%;
+	--rcs-indent-color-modifier: 40%;
+	--rcs-icon-color-modifier: 100%;
+}
+
+/* Loop over all available colors */
+@for $i from 1 through 16 {
+	$nth-selector: "#{16}n + #{($i - 1)}";
+
+	.nav-folder:nth-of-type(#{$nth-selector}) .nav-folder-title {
+		color: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-base-color-modifier),
+				var(--rcs-contrast-color)
+		);
+		--nav-item-color-hover: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-hover-color-modifier),
+				var(--rcs-default-text-color)
+		);
+		--nav-item-background-hover: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-bg-contrast-modifier),
+				transparent
+		);
+		--background-modifier-border-focus: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-border-focus-modifier),
+				transparent
+		);
+		--nav-collapse-icon-color: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-icon-color-modifier),
+				transparent
+		);
+	}
+
+	.nav-folder:nth-of-type(#{$nth-selector}) .tree-item-children {
+		--nav-indentation-guide-color: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-indent-color-modifier),
+				transparent
+		);
+	}
+
+	.nav-folder:nth-of-type(#{$nth-selector}) .tree-item-children .nav-file-title {
+		color: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-base-color-modifier),
+				var(--rcs-default-text-color)
+		);
+		--nav-item-color-hover: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-hover-color-modifier),
+				var(--rcs-default-text-color)
+		);
+		--nav-item-background-hover: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-bg-contrast-modifier),
+				transparent
+		);
+		--background-modifier-border-focus: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-border-focus-modifier),
+				transparent
+		);
+		--nav-item-background-active: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-active-contrast-modifier),
+				transparent
+		);
+	}
+
+	.nav-folder:nth-of-type(#{$nth-selector}) .tree-item-children .nav-file-title.is-active {
+		color: color-mix(
+				in srgb,
+				var(--rcs-color-#{$i}) var(--rcs-active-contrast-modifier),
+				var(--rcs-default-text-color)
+		);
+	}
+
+	/* End of Loop */
+}
+
+/* Plugin Settings Styling */
+.rcs-schemes {
+	display: block;
+}
+
+.rcs-schemes .setting-item-control {
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	margin-top: 1rem;
+}
+
+.rcs-scheme-input {
+	display: block;
+	margin-bottom: .5rem;
+	text-align: left;
+	cursor: pointer;
+}
+
+.rcs-scheme-input .rcs-color-stripe {
+	display: flex;
+	flex-wrap: wrap;
+	border-radius: 4px;
+}
+
+.rcs-scheme-input .rcs-color-stripe div {
+	width: 14px;
+	height: 7px;
+}
