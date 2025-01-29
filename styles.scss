@@ -70,7 +70,7 @@ Obsidian Rainbow Colored Sidebar
 
 /* Loop over all available colors */
 @for $i from 1 through 16 {
-	$nth-selector: "#{16}n + #{($i - 1)}";
+	$nth-selector: "#{16}n + #{($i + 1)}"; // Obsidian has a random div on top of the folder list, messing with actual folder counting, thus we need to start at +1
 
 	.nav-files-container > div > .nav-folder:nth-of-type(#{$nth-selector}) .nav-folder-title {
 		color: color-mix(
