@@ -29,20 +29,9 @@ jobs:
         run: |
           tag="${GITHUB_REF#refs/tags/}"
           
+          zip rainbow-colored-sidebar${{ github.ref_name }}.zip main.js manifest.json styles.css LICENSE README.md
+          
           gh release create "$tag" \
             --title="$tag" \
             --draft \
-            main.js manifest.json styles.css
-
-          mkdir dist
-          cp main.js dist/
-          cp manifest.json dist/
-          cp styles.css dist/
-          cp LICENSE dist/
-          cp README.md dist/
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: rainbow-colored-sidebar-${{ github.ref_name }}
-          retention-days: 7
-          path: dist
+            main.js manifest.json styles.css rainbow-colored-sidebar${{ github.ref_name }}.zip
