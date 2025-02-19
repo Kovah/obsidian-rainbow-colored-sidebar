@@ -34,7 +34,6 @@ export default class RainbowColoredSidebar extends Plugin {
 	}
 
 	setColorScheme() {
-		console.info('Applying new color scheme: ' + this.settings.scheme);
 		const newScheme = schemes[this.settings.scheme];
 		newScheme.forEach((color, index) => {
 			document.documentElement.style.setProperty(`--rcs-color-${index + 1}`, color);
@@ -58,14 +57,7 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 
 	display(): void {
 		const {containerEl} = this;
-
 		containerEl.empty();
-
-		containerEl.createEl('h1', {text: 'Rainbow Colored Sidebar'});
-		containerEl.createEl('p').innerHTML = 'by <a href="https://kovah.de" target="_blank">Kevin Woblick</a>';
-		containerEl.createEl('br');
-
-		containerEl.createEl('h2', {text: 'Base Settings'});
 
 		const csSelect = new Setting(containerEl)
 			.setName('Color Scheme')
@@ -91,9 +83,7 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 			});
 		}
 
-		containerEl.createEl('br');
-
-		containerEl.createEl('h2', {text: 'Accessibility'});
+		new Setting(containerEl).setName('Accessibility').setHeading();
 
 		new Setting(containerEl)
 			.setName('Increase Contrast')
