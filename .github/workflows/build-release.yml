@@ -29,9 +29,9 @@ jobs:
         run: |
           tag="${GITHUB_REF#refs/tags/}"
           
-          zip rainbow-colored-sidebar${{ github.ref_name }}.zip main.js manifest.json styles.css LICENSE README.md
+          zip rainbow-colored-sidebar-${{ github.ref_name }}.zip main.js manifest.json styles.css LICENSE README.md
           
           gh release create "$tag" \
             --title="$tag" \
             --draft \
-            main.js manifest.json styles.css rainbow-colored-sidebar${{ github.ref_name }}.zip
+            main.js manifest.json styles.css rainbow-colored-sidebar-${{ github.ref_name }}.zip
