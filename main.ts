@@ -17,7 +17,7 @@ export default class RainbowColoredSidebar extends Plugin {
 	async onload() {
 		await this.loadSettings();
 		this.setColorScheme();
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new RainbowColoredSidebarSettingTab(this.app, this));
 	}
 
 	onunload() {
@@ -48,7 +48,7 @@ export default class RainbowColoredSidebar extends Plugin {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
+class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 	plugin: RainbowColoredSidebar;
 
 	constructor(app: App, plugin: RainbowColoredSidebar) {
