@@ -13,15 +13,20 @@ const DEFAULT_SETTINGS: RainbowColoredSidebarSettings = {
 
 export default class RainbowColoredSidebar extends Plugin {
 	settings: RainbowColoredSidebarSettings;
+	mutationObserver: MutationObserver;
+	mutationTimeout: ReturnType<typeof setTimeout> | null;
 
 	async onload() {
 		await this.loadSettings();
-		this.setColorScheme();
+		await this.setColorScheme();
+		await this.setFolderStyling();
+		this.registerFileTreeObserver();
+
 		this.addSettingTab(new RainbowColoredSidebarSettingTab(this.app, this));
 	}
 
 	onunload() {
-		// nothing to do here
+		this.mutationObserver.disconnect();
 	}
 
 	async loadSettings() {
@@ -30,10 +35,12 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	async saveSettings() {
 		await this.saveData(this.settings);
-		this.setColorScheme();
+		await this.setColorScheme();
+		await this.setFolderStyling();
 	}
 
-	setColorScheme() {
+	async setColorScheme() {
+		// Add the actual colors as CSS variables to the document root
 		const newScheme = schemes[this.settings.scheme];
 		newScheme.forEach((color, index) => {
 			document.documentElement.style.setProperty(`--rcs-color-${index + 1}`, color);
@@ -44,6 +51,38 @@ export default class RainbowColoredSidebar extends Plugin {
 		} else {
 			document.documentElement.removeAttribute('data-rcs-a11y');
 		}
+	}
+
+	async setFolderStyling() {
+		// Get all folders from the root path, child folders are not needed here
+		const folders = (await this.app.vault.adapter.list('/')).folders.filter((folder) => folder !== '.obsidian');
+		if (folders) {
+			for (let i = 0; i < folders.length; i++) {
+				// Add rcs-item-x classes to all folders based on data-path with the numbering being 1-16 repeating indefinitely
+				const classIndex = (i % 16) + 1;
+				document.querySelector(`[data-path="${folders[i]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
+			}
+		}
+	}
+
+	// Add a JS mutation observer to catch the folder list changing when the user scrolls
+	registerFileTreeObserver() {
+		const targetNode = document.querySelector('.nav-files-container') as Node;
+
+		this.mutationObserver = new MutationObserver(() => {
+			// Instead of running on every known mutation, debounce the folder styling by 200ms
+			if (this.mutationTimeout) {
+				clearTimeout(this.mutationTimeout);
+			}
+			this.mutationTimeout = setTimeout(async () => {
+				await this.setFolderStyling();
+			}, 200);
+		});
+
+		this.mutationObserver.observe(targetNode, {
+			childList: true,
+			subtree: true,
+		});
 	}
 }
 
