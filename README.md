@@ -10,6 +10,8 @@ This [Obsidian](https://obsidian.md) plugin automatically colors your sidebar ba
 
 I built this plugin because I wasn't satisfied with the options for colored sidebars that are currently available. There is no limit in the number of folders in your sidebar, as the color theme repeats infinitely. 
 
+> [!NOTE] **Disclaimer**
+> This plugin automatically colors your sidebar based on the folder list sorted from A-Z. The ordering of folders in your file manager cannot be taken into account, so it's possible that some colors might end up mixed.
 
 ## Features
 
