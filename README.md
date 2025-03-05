@@ -1,4 +1,4 @@
-<h1 align="center">Obsidian Rainbow-Colored Sidebar Plugin</h1>
+<h1 align="center">Rainbow-Colored Sidebar Plugin</h1>
 
 <p align="center">
   <picture>
