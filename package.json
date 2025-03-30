@@ -14,7 +14,7 @@
 		"colored",
 		"sidebar"
 	],
-	"author": "Kevin Woblick <contact@kovah.de>",
+	"author": "Kevin Woblick <contact@woblick.dev>",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^22.13.4",
