@@ -18,9 +18,12 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
-		await this.setColorScheme();
-		await this.setFolderStyling();
-		this.registerFileTreeObserver();
+
+		this.app.workspace.onLayoutReady(async () => {
+			await this.setColorScheme();
+			await this.setFolderStyling();
+			this.registerFileTreeObserver();
+		});
 
 		this.addSettingTab(new RainbowColoredSidebarSettingTab(this.app, this));
 	}
