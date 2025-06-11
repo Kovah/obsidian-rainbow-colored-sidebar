@@ -19,17 +19,25 @@ export default class RainbowColoredSidebar extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		this.app.workspace.onLayoutReady(async () => {
-			await this.setColorScheme();
-			await this.setFolderStyling();
-			this.registerFileTreeObserver();
-		});
+		this.app.workspace.onLayoutReady(this.boot.bind(this));
+		this.registerEvent(this.app.workspace.on('layout-change', this.boot.bind(this)));
 
 		this.addSettingTab(new RainbowColoredSidebarSettingTab(this.app, this));
 	}
 
+	async boot() {
+		await this.setColorScheme();
+		await this.setFolderStyling();
+		this.registerFileTreeObserver();
+	}
+
 	onunload() {
 		this.mutationObserver.disconnect();
+
+		schemes[this.settings.scheme].forEach((color, index) => {
+			document.documentElement.style.removeProperty(`--rcs-color-${index + 1}`);
+		});
+		document.documentElement.removeAttribute('data-rcs-a11y');
 	}
 
 	async loadSettings() {
@@ -71,8 +79,11 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	// Add a JS mutation observer to catch the folder list changing when the user scrolls
 	registerFileTreeObserver() {
-		const targetNode = document.querySelector('.nav-files-container') as Node;
+		// Remove possible previous observers after a layout change
+		this.mutationObserver?.disconnect();
 
+		// Register a new observer on the .nav-files-container node
+		const targetNode = document.querySelector('.nav-files-container') as Node;
 		this.mutationObserver = new MutationObserver(() => {
 			// Instead of running on every known mutation, debounce the folder styling by 200ms
 			if (this.mutationTimeout) {
