@@ -1,14 +1,16 @@
-import {App, Plugin, PluginSettingTab, Setting} from 'obsidian';
+import {App, Plugin, PluginSettingTab, Setting, AbstractInputSuggest} from 'obsidian';
 import {schemes} from './color-schemes';
 
 interface RainbowColoredSidebarSettings {
 	scheme: string;
 	increaseContrast: boolean;
+	folderList: string[];
 }
 
 const DEFAULT_SETTINGS: RainbowColoredSidebarSettings = {
 	scheme: 'csDefault',
 	increaseContrast: false,
+	folderList: [],
 };
 
 export default class RainbowColoredSidebar extends Plugin {
@@ -75,6 +77,35 @@ export default class RainbowColoredSidebar extends Plugin {
 				document.querySelector(`[data-path="${folders[i]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
 			}
 		}
+
+		// Get specific folders form setting for independent color rendering
+		const sub_folders = this.settings.folderList;
+		if (sub_folders) {
+			for (let i = 0; i < sub_folders.length; i++){
+				const ext = (await this.app.vault.adapter.list(sub_folders[i])).folders
+					.filter((folder) => folder !== this.app.vault.configDir);
+
+				// Try to obtain the index of rcs-item that parent using
+				const parent_folder = sub_folders[i].split("/")[0];
+				let parent_rcs_index: string | undefined;
+				const parentElement = document.querySelector(`[data-path="${parent_folder}"]`)?.parentElement;
+				if (parentElement) {
+					parent_rcs_index = Array.from(parentElement.classList)
+						.filter((item) => item.includes('rcs-item'))[0];
+
+					// Calculate a new starting index to avoid color conflict with parent's siblings
+					if (parent_rcs_index){
+						const new_rcs_index = Number(parent_rcs_index[parent_rcs_index.length-1] + 1);
+
+						for (let j=0; j < ext.length; j++){
+							const classIndex = ((new_rcs_index + 1 + j)% 16) + 1;
+							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
+							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add('sub-rcs');
+						}
+					}
+				}
+			}
+		} 
 	}
 
 	// Add a JS mutation observer to catch the folder list changing when the user scrolls
@@ -148,6 +179,46 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 					this.plugin.settings.increaseContrast = value;
 					await this.plugin.saveSettings();
 				}));
+		
+		new Setting(containerEl).setName('Enable Independent Color Scheme for Specific Folders').setHeading();
+
+		new Setting(containerEl)
+			.setDesc('List of folders (Reload App to take effect)')
+			.addExtraButton((button) => {
+				button
+					.setIcon('plus')
+					.setTooltip('Add folder')
+					.onClick(() => {
+						this.plugin.settings.folderList.push('');
+						this.display();
+					});
+			});
+		
+		for (let i = 0; i < this.plugin.settings.folderList.length; i++) {
+			new Setting(containerEl)
+				.addSearch(search => {
+					search
+						.setPlaceholder('Example: folder1/folder2')
+						.setValue(this.plugin.settings.folderList[i])
+						.onChange(async (value) => {
+							this.plugin.settings.folderList[i] = value;
+							await this.plugin.saveSettings();
+						});
+
+					// Add folder suggestions
+					new FolderSuggest(this.app, search.inputEl);
+				})
+				.addExtraButton((button) => {
+					button
+						.setIcon('trash')
+						.setTooltip('Remove this folder')
+						.onClick(() => {
+							this.plugin.settings.folderList.splice(i, 1);
+							this.plugin.saveSettings();
+							this.display();
+						});
+				});
+		}
 
 		containerEl.createEl('br');
 		containerEl.createEl('hr');
@@ -158,4 +229,32 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 		this.plugin.settings.scheme = (event.target as HTMLInputElement).value;
 		await this.plugin.saveSettings();
 	}
+}
+
+class FolderSuggest extends AbstractInputSuggest<string> {
+    private folders: string[];
+
+    constructor(app: App, private inputEl: HTMLInputElement) {
+        super(app, inputEl);
+        // Get all folders and include root folder
+        this.folders = ["/"].concat(this.app.vault.getAllFolders().map(folder => folder.path));
+    }
+
+    getSuggestions(inputStr: string): string[] {
+        const inputLower = inputStr.toLowerCase();
+        return this.folders.filter(folder => 
+            folder.toLowerCase().includes(inputLower)
+        );
+    }
+
+    renderSuggestion(folder: string, el: HTMLElement): void {
+        el.createEl("div", { text: folder });
+    }
+
+    selectSuggestion(folder: string): void {
+        this.inputEl.value = folder;
+        const event = new Event('input');
+        this.inputEl.dispatchEvent(event);
+        this.close();
+    }
 }
