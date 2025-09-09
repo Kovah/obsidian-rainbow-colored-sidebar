@@ -143,6 +143,30 @@ Obsidian Rainbow Colored Sidebar
 		);
 	}
 
+	.rcs-item-#{$i}.sub-rcs .nav-folder-title {
+		color: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-base-color-modifier), var(--rcs-contrast-color)) !important;
+		--nav-item-color-hover: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-hover-color-modifier), var(--rcs-default-text-color)) !important;
+		--nav-item-background-hover: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-bg-contrast-modifier), transparent) !important;
+		--background-modifier-border-focus: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-border-focus-modifier), transparent) !important;
+		--nav-collapse-icon-color: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-icon-color-modifier), transparent) !important;
+	}
+
+	.rcs-item-#{$i}.sub-rcs .tree-item-children {
+		--nav-indentation-guide-color: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-indent-color-modifier), transparent) !important;
+	}
+
+	.rcs-item-#{$i}.sub-rcs .tree-item-children .nav-file-title {
+		color: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-base-color-modifier), var(--rcs-default-text-color)) !important;
+		--nav-item-color-hover: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-hover-color-modifier), var(--rcs-default-text-color)) !important;
+		--nav-item-background-hover: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-bg-contrast-modifier), transparent) !important;
+		--background-modifier-border-focus: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-border-focus-modifier), transparent) !important;
+		--nav-item-background-active: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-active-contrast-modifier), transparent) !important;
+	}
+
+	.rcs-item-#{$i}.sub-rcs .tree-item-children .nav-file-title.is-active {
+		color: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-active-contrast-modifier), var(--rcs-default-text-color)) !important;
+	}
+
 	/* End of Loop */
 }
 
