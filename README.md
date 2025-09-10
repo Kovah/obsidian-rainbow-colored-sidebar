@@ -23,12 +23,13 @@ I built this plugin because I wasn't satisfied with the options for colored side
   - More coming soon!
 - Automatic coloring of sub-folders and files, with an indicator for active files.
 - Additional option to toggle an accessibility mode which increases the color contrast.
+- Option to restart the coloring for subfolders so larger structures may get their own styling.
 
 
 ## Installation
 
-### From Community Plugins (Coming soon...)
-1. Open Obsidian.
+### From Community Plugins
+1. Open Obsidian or the [Plugin Marketplace](https://obsidian.md/plugins?id=rainbow-colored-sidebar)
 2. Go to `Settings` > `Community plugins`.
 3. Click on `Browse` and search for `Rainbow-Colored Sidebar`.
 4. Click `Install` and then `Enable`.
@@ -50,6 +51,11 @@ I built this plugin because I wasn't satisfied with the options for colored side
 
 ### Accessibility Settings
 - **Increase Contrast**: Increases the color contrast if enabled for better readability.
+
+### Enable Independent Color Scheme for Specific Folders
+This restarts the color scheme for selected sub folders to distinguish them from top level folders
+
+- **Select folders**: Select a folder from your Vault to restart the color scheme for that folder. 
 
 ---
 

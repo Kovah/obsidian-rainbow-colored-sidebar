@@ -192,10 +192,13 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 
-		new Setting(containerEl).setName('Enable Independent Color Scheme for Specific Folders').setHeading();
+		new Setting(containerEl)
+			.setHeading()
+			.setName('Enable Independent Color Scheme for Specific Folders')
+			.setDesc('This restarts the color scheme for selected sub folders to distinguish them from top level folders.');
 
 		new Setting(containerEl)
-			.setDesc('List of folders (Reload App to take effect)')
+			.setDesc('List of folders')
 			.addExtraButton((button) => {
 				button
 					.setIcon('plus')
