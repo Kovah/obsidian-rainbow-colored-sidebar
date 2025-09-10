@@ -40,6 +40,8 @@ export default class RainbowColoredSidebar extends Plugin {
 			document.documentElement.style.removeProperty(`--rcs-color-${index + 1}`);
 		});
 		document.documentElement.removeAttribute('data-rcs-a11y');
+
+		this.resetFolderStyling();
 	}
 
 	async loadSettings() {
@@ -49,6 +51,7 @@ export default class RainbowColoredSidebar extends Plugin {
 	async saveSettings() {
 		await this.saveData(this.settings);
 		await this.setColorScheme();
+		this.resetFolderStyling();
 		await this.setFolderStyling();
 	}
 
@@ -67,6 +70,7 @@ export default class RainbowColoredSidebar extends Plugin {
 	}
 
 	async setFolderStyling() {
+
 		// Get all folders from the root path, child folders are not needed here
 		const folders = (await this.app.vault.adapter.list('/')).folders
 			.filter((folder) => folder !== this.app.vault.configDir);
@@ -100,12 +104,20 @@ export default class RainbowColoredSidebar extends Plugin {
 						for (let j=0; j < ext.length; j++){
 							const classIndex = ((new_rcs_index + 1 + j)% 16) + 1;
 							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
-							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add('sub-rcs');
+							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add('rcs-sub-item');
 						}
 					}
 				}
 			}
-		} 
+		}
+	}
+
+	resetFolderStyling() {
+		// Remove all previously added rcs- classes from items in the file explorer to get a clean state to work with
+		document.querySelectorAll('.tree-item[class*="rcs-"]').forEach(item => {
+			Array.from(item.classList).filter(cls => cls.startsWith('rcs-'))
+				.forEach(cls => item.classList.remove(cls));
+		});
 	}
 
 	// Add a JS mutation observer to catch the folder list changing when the user scrolls
@@ -179,7 +191,7 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 					this.plugin.settings.increaseContrast = value;
 					await this.plugin.saveSettings();
 				}));
-		
+
 		new Setting(containerEl).setName('Enable Independent Color Scheme for Specific Folders').setHeading();
 
 		new Setting(containerEl)
@@ -193,7 +205,7 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 						this.display();
 					});
 			});
-		
+
 		for (let i = 0; i < this.plugin.settings.folderList.length; i++) {
 			new Setting(containerEl)
 				.addSearch(search => {
@@ -242,7 +254,7 @@ class FolderSuggest extends AbstractInputSuggest<string> {
 
     getSuggestions(inputStr: string): string[] {
         const inputLower = inputStr.toLowerCase();
-        return this.folders.filter(folder => 
+        return this.folders.filter(folder =>
             folder.toLowerCase().includes(inputLower)
         );
     }
