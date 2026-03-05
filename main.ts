@@ -5,12 +5,14 @@ interface RainbowColoredSidebarSettings {
 	scheme: string;
 	increaseContrast: boolean;
 	folderList: string[];
+	colorOpacity: number;
 }
 
 const DEFAULT_SETTINGS: RainbowColoredSidebarSettings = {
 	scheme: 'csDefault',
 	increaseContrast: false,
 	folderList: [],
+	colorOpacity: 100,
 };
 
 export default class RainbowColoredSidebar extends Plugin {
@@ -39,6 +41,7 @@ export default class RainbowColoredSidebar extends Plugin {
 		schemes[this.settings.scheme].forEach((color, index) => {
 			document.documentElement.style.removeProperty(`--rcs-color-${index + 1}`);
 		});
+		document.documentElement.style.removeProperty('--rcs-opacity');
 		document.documentElement.removeAttribute('data-rcs-a11y');
 
 		this.resetFolderStyling();
@@ -61,6 +64,11 @@ export default class RainbowColoredSidebar extends Plugin {
 		newScheme.forEach((color, index) => {
 			document.documentElement.style.setProperty(`--rcs-color-${index + 1}`, color);
 		});
+
+		document.documentElement.style.setProperty(
+			'--rcs-opacity',
+			String(this.settings.colorOpacity / 100)
+		);
 
 		if (this.settings.increaseContrast) {
 			document.documentElement.setAttribute('data-rcs-a11y', '1');
@@ -190,6 +198,19 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 				.onChange(async (value) => {
 					this.plugin.settings.increaseContrast = value;
 					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Color opacity')
+			.setDesc('Adjust the intensity of folder colors (0 = invisible, 100 = full color)')
+			.addSlider(slider => slider
+				.setLimits(0, 100, 5)
+				.setValue(this.plugin.settings.colorOpacity)
+				.setDynamicTooltip()
+				.onChange(async (value) => {
+					this.plugin.settings.colorOpacity = value;
+					await this.plugin.saveSettings();
+					this.plugin.setColorScheme();
 				}));
 
 		new Setting(containerEl)
