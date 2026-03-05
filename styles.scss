@@ -72,6 +72,7 @@ Obsidian Rainbow Colored Sidebar
 @for $i from 1 through 16 {
 
 	.nav-files-container > div > .nav-folder.rcs-item-#{$i} .nav-folder-title {
+		opacity: var(--rcs-opacity, 1);
 		color: color-mix(
 				in srgb,
 				var(--rcs-color-#{$i}) var(--rcs-base-color-modifier),
@@ -144,6 +145,7 @@ Obsidian Rainbow Colored Sidebar
 	}
 
 	.rcs-item-#{$i}.rcs-sub-item .nav-folder-title {
+		opacity: var(--rcs-opacity, 1) !important;
 		color: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-base-color-modifier), var(--rcs-contrast-color)) !important;
 		--nav-item-color-hover: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-hover-color-modifier), var(--rcs-default-text-color)) !important;
 		--nav-item-background-hover: color-mix(in srgb, var(--rcs-color-#{$i}) var(--rcs-bg-contrast-modifier), transparent) !important;
