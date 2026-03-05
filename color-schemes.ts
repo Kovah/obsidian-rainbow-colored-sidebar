@@ -150,6 +150,44 @@ export const csSummerVibes = [
 	'#fa2b37',
 ];
 
+export const csPastel = [
+	'#c5e870',  // pastel lime
+	'#7ee8aa',  // pastel mint
+	'#7ee8d0',  // pastel teal mint
+	'#7ae8e4',  // pastel teal
+	'#7acff0',  // pastel sky
+	'#7abbf5',  // pastel cornflower
+	'#8aadff',  // pastel blue
+	'#a8a8ff',  // pastel periwinkle
+	'#cc8aff',  // pastel purple
+	'#e88aff',  // pastel violet
+	'#ff8ace',  // pastel pink
+	'#ff8aaa',  // pastel rose
+	'#ff9090',  // pastel salmon
+	'#ffb080',  // pastel peach
+	'#ffcc80',  // pastel apricot
+	'#ffe080',  // pastel yellow
+];
+
+export const csMuted = [
+	'#6aaa28',  // muted olive green
+	'#28965a',  // muted forest green
+	'#28967c',  // muted teal
+	'#289698',  // muted slate teal
+	'#2888b0',  // muted steel blue
+	'#2878c8',  // muted blue
+	'#4868c8',  // muted medium blue
+	'#6058c8',  // muted slate blue
+	'#8848c8',  // muted purple
+	'#aa30c8',  // muted magenta
+	'#c83080',  // muted cranberry
+	'#c83050',  // muted crimson
+	'#c83038',  // muted brick red
+	'#c86020',  // muted rust
+	'#c88820',  // muted ochre
+	'#c8a020',  // muted golden
+];
+
 export const csA11y = [
 	'#7dcf02',
 	'#00bc7c',
@@ -178,5 +216,7 @@ export const schemes: { [key: string]: string[] } = {
 	csMixed,
 	csBlueWave,
 	csSummerVibes,
+	csPastel,
+	csMuted,
 	csA11y
 };
