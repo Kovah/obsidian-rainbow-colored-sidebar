@@ -257,6 +257,98 @@ export const csMuted: ColorScheme = {
 	],
 };
 
+export const csDarkGarden: ColorScheme = {
+	name: 'Dark Garden',
+	author: 'Kevin Woblick <mail@woblick.dev>',
+	colors: [
+		'#5b8f22',
+		'#328a4d',
+		'#24896e',
+		'#1f8790',
+		'#2c7fa8',
+		'#3d73bd',
+		'#5d66bd',
+		'#7a5aac',
+		'#9b4d91',
+		'#b54874',
+		'#c84e58',
+		'#c95f36',
+		'#bd7728',
+		'#a88b24',
+		'#81952d',
+		'#5b9640',
+	],
+};
+
+export const csDarkInk: ColorScheme = {
+	name: 'Dark Ink',
+	author: 'Kevin Woblick <mail@woblick.dev>',
+	colors: [
+		'#2f855a',
+		'#2c7a7b',
+		'#2b6cb0',
+		'#4c51bf',
+		'#6b46c1',
+		'#97266d',
+		'#b83280',
+		'#c53030',
+		'#c05621',
+		'#b7791f',
+		'#859900',
+		'#5f9b3d',
+		'#25855a',
+		'#247a86',
+		'#2f6aa3',
+		'#5a5bb5',
+	],
+};
+
+export const csLightGlow: ColorScheme = {
+	name: 'Light Glow',
+	author: 'Kevin Woblick <mail@woblick.dev>',
+	colors: [
+		'#a3e635',
+		'#4ade80',
+		'#2dd4bf',
+		'#22d3ee',
+		'#38bdf8',
+		'#60a5fa',
+		'#818cf8',
+		'#a78bfa',
+		'#c084fc',
+		'#e879f9',
+		'#f472b6',
+		'#fb7185',
+		'#f87171',
+		'#fb923c',
+		'#fbbf24',
+		'#fde047',
+	],
+};
+
+export const csLightEmber: ColorScheme = {
+	name: 'Light Ember',
+	author: 'Kevin Woblick <mail@woblick.dev>',
+	colors: [
+		'#f97316',
+		'#fb7185',
+		'#e879f9',
+		'#a78bfa',
+		'#60a5fa',
+		'#22d3ee',
+		'#2dd4bf',
+		'#4ade80',
+		'#a3e635',
+		'#facc15',
+		'#fb923c',
+		'#f87171',
+		'#f472b6',
+		'#c084fc',
+		'#818cf8',
+		'#38bdf8',
+	],
+};
+
 export const schemes: { [key: string]: ColorScheme } = {
 	csDefault,
 	csA11y,
@@ -269,4 +361,8 @@ export const schemes: { [key: string]: ColorScheme } = {
 	csSummerVibes,
 	csPastel,
 	csMuted,
+	csDarkGarden,
+	csDarkInk,
+	csLightGlow,
+	csLightEmber,
 };
