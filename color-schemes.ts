@@ -1,12 +1,16 @@
+export type ColorSchemeCategory = 'normal' | 'special' | 'light-ui' | 'dark-ui';
+
 export interface ColorScheme {
 	name: string;
 	author: string;
+	category: ColorSchemeCategory;
 	colors: string[];
 }
 
 export const csDefault: ColorScheme = {
 	name: 'Default',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'normal',
 	colors: [
 		'#7dcf02',
 		'#00c851',
@@ -30,6 +34,7 @@ export const csDefault: ColorScheme = {
 export const csA11y: ColorScheme = {
 	name: 'A11y',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'normal',
 	colors: [
 		'#7dcf02',
 		'#00bc7c',
@@ -53,6 +58,7 @@ export const csA11y: ColorScheme = {
 export const csRed: ColorScheme = {
 	name: 'Red',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'normal',
 	colors: [
 		'#ff2056',
 		'#fa2b37',
@@ -76,6 +82,7 @@ export const csRed: ColorScheme = {
 export const csPurple: ColorScheme = {
 	name: 'Purple',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'normal',
 	colors: [
 		'#ad46ff',
 		'#e12afb',
@@ -99,6 +106,7 @@ export const csPurple: ColorScheme = {
 export const csYellow: ColorScheme = {
 	name: 'Yellow',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'normal',
 	colors: [
 		'#fd9a02',
 		'#f0b102',
@@ -122,6 +130,7 @@ export const csYellow: ColorScheme = {
 export const csBlue: ColorScheme = {
 	name: 'Blue',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'normal',
 	colors: [
 		'#00b8db',
 		'#00a6f5',
@@ -145,6 +154,7 @@ export const csBlue: ColorScheme = {
 export const csMixed: ColorScheme = {
 	name: 'Mixed',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'special',
 	colors: [
 		'#00b8db',
 		'#f6329b',
@@ -168,6 +178,7 @@ export const csMixed: ColorScheme = {
 export const csBlueWave: ColorScheme = {
 	name: 'Blue Wave',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'special',
 	colors: [
 		'#00bc7c',
 		'#00bba7',
@@ -191,6 +202,7 @@ export const csBlueWave: ColorScheme = {
 export const csSummerVibes: ColorScheme = {
 	name: 'Summer Vibes',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'special',
 	colors: [
 		'#ff2056',
 		'#fa2b37',
@@ -214,6 +226,7 @@ export const csSummerVibes: ColorScheme = {
 export const csPinkBlossom: ColorScheme = {
 	name: 'Pink Blossom',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'special',
 	colors: [
 		'#f9a8d4',
 		'#f472b6',
@@ -237,6 +250,7 @@ export const csPinkBlossom: ColorScheme = {
 export const csCyberpunk: ColorScheme = {
 	name: 'Cyberpunk',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'special',
 	colors: [
 		'#f9f871',
 		'#facc15',
@@ -260,6 +274,7 @@ export const csCyberpunk: ColorScheme = {
 export const csNoirCarnival: ColorScheme = {
 	name: 'Noir Carnival',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'special',
 	colors: [
 		'#0f172a',
 		'#18181b',
@@ -283,6 +298,7 @@ export const csNoirCarnival: ColorScheme = {
 export const csPastel: ColorScheme = {
 	name: 'Pastel',
 	author: 'rookledookle <https://github.com/rookledookle>',
+	category: 'normal',
 	colors: [
 		'#c5e870',  // pastel lime
 		'#7ee8aa',  // pastel mint
@@ -306,6 +322,7 @@ export const csPastel: ColorScheme = {
 export const csMuted: ColorScheme = {
 	name: 'Muted',
 	author: 'rookledookle <https://github.com/rookledookle>',
+	category: 'normal',
 	colors: [
 		'#6aaa28',  // muted olive green
 		'#28965a',  // muted forest green
@@ -329,6 +346,7 @@ export const csMuted: ColorScheme = {
 export const csDarkGarden: ColorScheme = {
 	name: 'Dark Garden',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'light-ui',
 	colors: [
 		'#5b8f22',
 		'#328a4d',
@@ -352,6 +370,7 @@ export const csDarkGarden: ColorScheme = {
 export const csDarkInk: ColorScheme = {
 	name: 'Dark Ink',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'light-ui',
 	colors: [
 		'#2f855a',
 		'#2c7a7b',
@@ -375,6 +394,7 @@ export const csDarkInk: ColorScheme = {
 export const csLightGlow: ColorScheme = {
 	name: 'Light Glow',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'dark-ui',
 	colors: [
 		'#a3e635',
 		'#4ade80',
@@ -398,6 +418,7 @@ export const csLightGlow: ColorScheme = {
 export const csLightEmber: ColorScheme = {
 	name: 'Light Ember',
 	author: 'Kevin Woblick <mail@woblick.dev>',
+	category: 'dark-ui',
 	colors: [
 		'#f97316',
 		'#fb7185',
@@ -416,6 +437,15 @@ export const csLightEmber: ColorScheme = {
 		'#818cf8',
 		'#38bdf8',
 	],
+};
+
+export const schemeCategoryOrder: ColorSchemeCategory[] = ['normal', 'special', 'light-ui', 'dark-ui'];
+
+export const schemeCategoryNames: Record<ColorSchemeCategory, string> = {
+	normal: 'Normal',
+	special: 'Special',
+	'light-ui': 'Light User Interface',
+	'dark-ui': 'Dark User Interface',
 };
 
 export const schemes: { [key: string]: ColorScheme } = {

@@ -16,13 +16,10 @@ I built this plugin because I wasn't satisfied with the options for colored side
 ## Features
 
 - 18 Color Themes compatible with both the dark and light mode of Obsidian.
-  - 5 themes for a default rainbow color scheme starting at various colors. The default starts at green.
-  - 5 special themes: Blue Wave, Summer Vibes, Pink Blossom, Cyberpunk, and Noir Carnival.
-  - 2 softer themes for light backgrounds: Light Garden and Light Ink.
-  - 2 brighter themes for dark backgrounds: Dark Glow and Dark Ember.
-  - 2 toned-down themes: Pastel and Muted.
-  - 1 mixed scheme for a sprinkle of randomness in your folder structure.
-  - 1 Accessibility theme with colors that are easier to distinguish.
+  - Normal schemes for general use, including Default, A11y, Pastel, and Muted.
+  - Special schemes with stronger visual themes, including Blue Wave, Summer Vibes, Pink Blossom, Cyberpunk, Noir Carnival, and Mixed.
+  - Light user interface schemes with darker colors for lighter Obsidian themes.
+  - Dark user interface schemes with brighter colors for darker Obsidian themes.
 - Automatic coloring of sub-folders and files, with an indicator for active files.
 - Additional option to toggle an accessibility mode which increases the color contrast.
 - Option to restart the coloring for subfolders so larger structures may get their own styling.

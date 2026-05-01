@@ -1,5 +1,5 @@
 import {App, Plugin, PluginSettingTab, Setting, AbstractInputSuggest} from 'obsidian';
-import {schemes} from './color-schemes';
+import {schemeCategoryNames, schemeCategoryOrder, schemes} from './color-schemes';
 
 interface RainbowColoredSidebarSettings {
 	scheme: string;
@@ -70,14 +70,15 @@ export default class RainbowColoredSidebar extends Plugin {
 	}
 
 	async setFolderStyling() {
+		const colorCount = schemes[this.settings.scheme].colors.length;
 
 		// Get all folders from the root path, child folders are not needed here
 		const folders = (await this.app.vault.adapter.list('/')).folders
 			.filter((folder) => folder !== this.app.vault.configDir);
 		if (folders) {
 			for (let i = 0; i < folders.length; i++) {
-				// Add rcs-item-x classes to all folders based on data-path with the numbering being 1-16 repeating indefinitely
-				const classIndex = (i % 16) + 1;
+				// Add rcs-item-x classes to all folders based on data-path with the active scheme repeating indefinitely
+				const classIndex = (i % colorCount) + 1;
 				document.querySelector(`[data-path="${folders[i]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
 			}
 		}
@@ -95,14 +96,14 @@ export default class RainbowColoredSidebar extends Plugin {
 				const parentElement = document.querySelector(`[data-path="${parent_folder}"]`)?.parentElement;
 				if (parentElement) {
 					parent_rcs_index = Array.from(parentElement.classList)
-						.filter((item) => item.includes('rcs-item'))[0];
+						.find((item) => /^rcs-item-\d+$/.test(item));
 
 					// Calculate a new starting index to avoid color conflict with parent's siblings
 					if (parent_rcs_index){
-						const new_rcs_index = Number(parent_rcs_index[parent_rcs_index.length-1] + 1);
+						const new_rcs_index = Number(parent_rcs_index.replace('rcs-item-', ''));
 
 						for (let j=0; j < ext.length; j++){
-							const classIndex = ((new_rcs_index + 1 + j)% 16) + 1;
+							const classIndex = ((new_rcs_index + 1 + j) % colorCount) + 1;
 							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
 							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add('rcs-sub-item');
 						}
@@ -162,23 +163,32 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 			.setClass('rcs-schemes');
 
 		// Create inputs for all available color schemes
-		for (const schemeName in schemes) {
-			const radioEl = csSelect.controlEl.createEl('label', {attr: {class: 'rcs-scheme-input'}});
-			const input = radioEl.createEl('input', {
-				attr: {
-					name: 'rcs-scheme-radio',
-					type: 'radio',
-					value: schemeName,
-					title: `Author: ${schemes[schemeName].author}`,
-				}
-			});
-			input.addEventListener('change', this.changeColorScheme.bind(this));
-			if (this.plugin.settings.scheme === schemeName) input.setAttribute('checked', 'checked');
-			radioEl.createEl('span', {text: schemes[schemeName].name});
-			const stripeEl = radioEl.createEl('div', {attr: {class: 'rcs-color-stripe'}});
-			schemes[schemeName].colors.forEach(color => {
-				stripeEl.createEl('div', {attr: {style: 'background-color:' + color}});
-			});
+		for (const category of schemeCategoryOrder) {
+			const categorySchemes = Object.entries(schemes).filter(([, scheme]) => scheme.category === category);
+			if (categorySchemes.length === 0) continue;
+
+			const categoryEl = csSelect.controlEl.createEl('div', {attr: {class: 'rcs-scheme-category'}});
+			categoryEl.createEl('div', {text: schemeCategoryNames[category], attr: {class: 'rcs-scheme-category-title'}});
+			const optionsEl = categoryEl.createEl('div', {attr: {class: 'rcs-scheme-category-options'}});
+
+			for (const [schemeName, scheme] of categorySchemes) {
+				const radioEl = optionsEl.createEl('label', {attr: {class: 'rcs-scheme-input'}});
+				const input = radioEl.createEl('input', {
+					attr: {
+						name: 'rcs-scheme-radio',
+						type: 'radio',
+						value: schemeName,
+						title: `Author: ${scheme.author}`,
+					}
+				});
+				input.addEventListener('change', this.changeColorScheme.bind(this));
+				if (this.plugin.settings.scheme === schemeName) input.setAttribute('checked', 'checked');
+				radioEl.createEl('span', {text: scheme.name});
+				const stripeEl = radioEl.createEl('div', {attr: {class: 'rcs-color-stripe'}});
+				scheme.colors.forEach(color => {
+					stripeEl.createEl('div', {attr: {style: 'background-color:' + color}});
+				});
+			}
 		}
 
 		new Setting(containerEl).setName('Accessibility').setHeading();
