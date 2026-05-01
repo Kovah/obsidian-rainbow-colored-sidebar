@@ -2,13 +2,13 @@
 
 <p align="center">
   <picture>
-    <img src="preview.jpg" alt="Screenshot of some color schemes in Obsidian">
+    <img src="preview.jpg?v1.4.0" alt="Screenshot of some color schemes in Obsidian">
   </picture>
 </p>
 
-This [Obsidian](https://obsidian.md) plugin automatically colors your sidebar based on a color scheme you select. No configuration needed for single folders. No CSS tweaking needed. No folder prefixes needed.
+This [Obsidian](https://obsidian.md) plugin automatically colors your sidebar based on a color scheme you select. No CSS tweaking needed. No configuration for single folders. No folder prefixes.
 
-I built this plugin because I wasn't satisfied with the options for colored sidebars that are currently available. There is no limit in the number of folders in your sidebar, as the color theme repeats infinitely. 
+I built this plugin because I wasn't satisfied with the options for colored sidebars that are currently available. There is no limit in the number of folders in your sidebar, as the color theme repeats infinitely.
 
 > [!IMPORTANT]
 > This plugin automatically colors your sidebar based on the folder list sorted from A-Z. The ordering of folders in your file manager cannot be taken into account, so it's possible that some colors might end up mixed.
@@ -24,6 +24,13 @@ I built this plugin because I wasn't satisfied with the options for colored side
 - Additional option to toggle an accessibility mode which increases the color contrast.
 - Option to restart the coloring for subfolders so larger structures may get their own styling.
 
+## Available Themes
+
+<p align="center">
+  <picture>
+    <img src="preview-color-schemes.svg?v1.4.0" alt="Preview of all available color schemes">
+  </picture>
+</p>
 
 ## Installation
 
@@ -46,7 +53,7 @@ I built this plugin because I wasn't satisfied with the options for colored side
 2. Go to `Settings` > `Rainbow-Colored Sidebar`.
 
 ### Base Settings
-- **Select the Color Scheme**: Choose your theme. Done. Nothing else needed.
+- **Select the Color Scheme**: Choose your theme. Done. Nothing else is needed.
 
 ### Accessibility Settings
 - **Increase Contrast**: Increases the color contrast if enabled for better readability.
@@ -55,6 +62,10 @@ I built this plugin because I wasn't satisfied with the options for colored side
 This restarts the color scheme for selected sub folders to distinguish them from top level folders
 
 - **Select folders**: Select a folder from your Vault to restart the color scheme for that folder. 
+
+## Contributing
+
+Contributions are welcome. If you want to add a new theme or feature, please read the [contribution guide](CONTRIBUTING.md) before opening a pull request.
 
 ---
 
