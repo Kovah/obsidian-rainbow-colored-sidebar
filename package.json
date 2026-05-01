@@ -14,7 +14,7 @@
 		"colored",
 		"sidebar"
 	],
-	"author": "Kevin Woblick <contact@woblick.dev>",
+	"author": "Kevin Woblick <mail@woblick.dev>",
 	"license": "MIT",
 	"devDependencies": {
 		"@types/node": "^22.13",
