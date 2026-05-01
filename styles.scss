@@ -184,16 +184,28 @@ Obsidian Rainbow Colored Sidebar
 }
 
 .rcs-scheme-input {
-	display: block;
+	display: flex;
+	flex-wrap: wrap;
+	width: calc(50% - var(--size-4-2));
+	gap: var(--size-4-1);
 	margin-bottom: .5rem;
 	text-align: left;
 	cursor: pointer;
 }
 
+.is-phone .rcs-scheme-input {
+	width: 100%;
+}
+
+.is-phone .rcs-scheme-input input {
+	width: 1rem !important;
+}
+
 .rcs-scheme-input .rcs-color-stripe {
+	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	border-radius: 4px;
+	margin-top: 2px;
 }
 
 .rcs-scheme-input .rcs-color-stripe div {
