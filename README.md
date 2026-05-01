@@ -15,9 +15,9 @@ I built this plugin because I wasn't satisfied with the options for colored side
 
 ## Features
 
-- 15 Color Themes compatible with both the dark and light mode of Obsidian.
+- 18 Color Themes compatible with both the dark and light mode of Obsidian.
   - 5 themes for a default rainbow color scheme starting at various colors. The default starts at green.
-  - 2 special themes: Blue Wave which only uses blue colors, and Summer Vibes which uses a palette from red to yellow.
+  - 5 special themes: Blue Wave, Summer Vibes, Pink Blossom, Cyberpunk, and Noir Carnival.
   - 2 softer themes for light backgrounds: Light Garden and Light Ink.
   - 2 brighter themes for dark backgrounds: Dark Glow and Dark Ember.
   - 2 toned-down themes: Pastel and Muted.

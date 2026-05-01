@@ -211,6 +211,75 @@ export const csSummerVibes: ColorScheme = {
 	],
 };
 
+export const csPinkBlossom: ColorScheme = {
+	name: 'Pink Blossom',
+	author: 'Kevin Woblick <mail@woblick.dev>',
+	colors: [
+		'#f9a8d4',
+		'#f472b6',
+		'#ec4899',
+		'#db2777',
+		'#be185d',
+		'#fb7185',
+		'#fda4af',
+		'#fbcfe8',
+		'#e879f9',
+		'#d946ef',
+		'#c026d3',
+		'#a21caf',
+		'#fb6f92',
+		'#ff8fab',
+		'#ffb3c6',
+		'#ffc2d1',
+	],
+};
+
+export const csCyberpunk: ColorScheme = {
+	name: 'Cyberpunk',
+	author: 'Kevin Woblick <mail@woblick.dev>',
+	colors: [
+		'#f9f871',
+		'#facc15',
+		'#ff7a00',
+		'#ff2a6d',
+		'#d300c5',
+		'#8f00ff',
+		'#5b5cff',
+		'#05d9e8',
+		'#00f5d4',
+		'#39ff14',
+		'#b6ff00',
+		'#fee440',
+		'#ff9f1c',
+		'#ff3864',
+		'#bf00ff',
+		'#00bbf9',
+	],
+};
+
+export const csNoirCarnival: ColorScheme = {
+	name: 'Noir Carnival',
+	author: 'Kevin Woblick <mail@woblick.dev>',
+	colors: [
+		'#0f172a',
+		'#18181b',
+		'#1f2937',
+		'#312e81',
+		'#4c1d95',
+		'#581c87',
+		'#14532d',
+		'#166534',
+		'#365314',
+		'#3f6212',
+		'#713f12',
+		'#7f1d1d',
+		'#831843',
+		'#701a75',
+		'#4a044e',
+		'#111827',
+	],
+};
+
 export const csPastel: ColorScheme = {
 	name: 'Pastel',
 	author: 'rookledookle <https://github.com/rookledookle>',
@@ -359,6 +428,9 @@ export const schemes: { [key: string]: ColorScheme } = {
 	csMixed,
 	csBlueWave,
 	csSummerVibes,
+	csPinkBlossom,
+	csCyberpunk,
+	csNoirCarnival,
 	csPastel,
 	csMuted,
 	csDarkGarden,
