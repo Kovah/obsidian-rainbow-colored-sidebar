@@ -36,7 +36,7 @@ export default class RainbowColoredSidebar extends Plugin {
 	onunload() {
 		this.mutationObserver.disconnect();
 
-		schemes[this.settings.scheme].forEach((color, index) => {
+		schemes[this.settings.scheme].colors.forEach((color, index) => {
 			document.documentElement.style.removeProperty(`--rcs-color-${index + 1}`);
 		});
 		document.documentElement.removeAttribute('data-rcs-a11y');
@@ -57,7 +57,7 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	async setColorScheme() {
 		// Add the actual colors as CSS variables to the document root
-		const newScheme = schemes[this.settings.scheme];
+		const newScheme = schemes[this.settings.scheme].colors;
 		newScheme.forEach((color, index) => {
 			document.documentElement.style.setProperty(`--rcs-color-${index + 1}`, color);
 		});
@@ -169,13 +169,14 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 					name: 'rcs-scheme-radio',
 					type: 'radio',
 					value: schemeName,
+					title: `Author: ${schemes[schemeName].author}`,
 				}
 			});
 			input.addEventListener('change', this.changeColorScheme.bind(this));
 			if (this.plugin.settings.scheme === schemeName) input.setAttribute('checked', 'checked');
-			radioEl.createEl('span', {text: schemeName.replace('cs', '')});
+			radioEl.createEl('span', {text: schemes[schemeName].name});
 			const stripeEl = radioEl.createEl('div', {attr: {class: 'rcs-color-stripe'}});
-			schemes[schemeName].forEach(color => {
+			schemes[schemeName].colors.forEach(color => {
 				stripeEl.createEl('div', {attr: {style: 'background-color:' + color}});
 			});
 		}
