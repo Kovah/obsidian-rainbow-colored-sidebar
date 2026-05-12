@@ -16,7 +16,8 @@ const DEFAULT_SETTINGS: RainbowColoredSidebarSettings = {
 export default class RainbowColoredSidebar extends Plugin {
 	settings: RainbowColoredSidebarSettings;
 	mutationObserver: MutationObserver;
-	mutationTimeout: ReturnType<typeof setTimeout> | null;
+	mutationTimeout: number | null = null;
+	mutationTimeoutWindow: Window | null = null;
 
 	async onload() {
 		await this.loadSettings();
@@ -34,12 +35,14 @@ export default class RainbowColoredSidebar extends Plugin {
 	}
 
 	onunload() {
-		this.mutationObserver.disconnect();
+		this.mutationObserver?.disconnect();
+		this.clearMutationTimeout();
+		const doc = activeDocument;
 
 		schemes[this.settings.scheme].colors.forEach((color, index) => {
-			document.documentElement.style.removeProperty(`--rcs-color-${index + 1}`);
+			doc.documentElement.style.removeProperty(`--rcs-color-${index + 1}`);
 		});
-		document.documentElement.removeAttribute('data-rcs-a11y');
+		doc.documentElement.removeAttribute('data-rcs-a11y');
 
 		this.resetFolderStyling();
 	}
@@ -57,19 +60,21 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	async setColorScheme() {
 		// Add the actual colors as CSS variables to the document root
+		const doc = activeDocument;
 		const newScheme = schemes[this.settings.scheme].colors;
 		newScheme.forEach((color, index) => {
-			document.documentElement.style.setProperty(`--rcs-color-${index + 1}`, color);
+			doc.documentElement.style.setProperty(`--rcs-color-${index + 1}`, color);
 		});
 
 		if (this.settings.increaseContrast) {
-			document.documentElement.setAttribute('data-rcs-a11y', '1');
+			doc.documentElement.setAttribute('data-rcs-a11y', '1');
 		} else {
-			document.documentElement.removeAttribute('data-rcs-a11y');
+			doc.documentElement.removeAttribute('data-rcs-a11y');
 		}
 	}
 
 	async setFolderStyling() {
+		const doc = activeDocument;
 		const colorCount = schemes[this.settings.scheme].colors.length;
 
 		// Get all folders from the root path, child folders are not needed here
@@ -86,7 +91,7 @@ export default class RainbowColoredSidebar extends Plugin {
 			for (let i = 0; i < folders.length; i++) {
 				// Add rcs-item-x classes to all folders based on data-path with the active scheme repeating indefinitely
 				const classIndex = (i % colorCount) + 1;
-				document.querySelector(`[data-path="${folders[i]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
+				doc.querySelector(`[data-path="${folders[i]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
 			}
 		}
 
@@ -100,7 +105,7 @@ export default class RainbowColoredSidebar extends Plugin {
 				// Try to obtain the index of rcs-item that parent using
 				const parent_folder = sub_folders[i].split("/")[0];
 				let parent_rcs_index: string | undefined;
-				const parentElement = document.querySelector(`[data-path="${parent_folder}"]`)?.parentElement;
+				const parentElement = doc.querySelector(`[data-path="${parent_folder}"]`)?.parentElement;
 				if (parentElement) {
 					parent_rcs_index = Array.from(parentElement.classList)
 						.find((item) => /^rcs-item-\d+$/.test(item));
@@ -111,8 +116,8 @@ export default class RainbowColoredSidebar extends Plugin {
 
 						for (let j=0; j < ext.length; j++){
 							const classIndex = ((new_rcs_index + 1 + j) % colorCount) + 1;
-							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
-							document.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add('rcs-sub-item');
+							doc.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add(`rcs-item-${classIndex}`);
+							doc.querySelector(`[data-path="${ext[j]}"]`)?.parentElement?.classList.add('rcs-sub-item');
 						}
 					}
 				}
@@ -122,7 +127,7 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	resetFolderStyling() {
 		// Remove all previously added rcs- classes from items in the file explorer to get a clean state to work with
-		document.querySelectorAll('.tree-item[class*="rcs-"]').forEach(item => {
+		activeDocument.querySelectorAll('.tree-item[class*="rcs-"]').forEach(item => {
 			Array.from(item.classList).filter(cls => cls.startsWith('rcs-'))
 				.forEach(cls => item.classList.remove(cls));
 		});
@@ -132,15 +137,19 @@ export default class RainbowColoredSidebar extends Plugin {
 	registerFileTreeObserver() {
 		// Remove possible previous observers after a layout change
 		this.mutationObserver?.disconnect();
+		this.clearMutationTimeout();
 
 		// Register a new observer on the .nav-files-container node
-		const targetNode = document.querySelector('.nav-files-container') as Node;
+		const targetNode = activeDocument.querySelector('.nav-files-container');
+		if (!targetNode) return;
+
 		this.mutationObserver = new MutationObserver(() => {
 			// Instead of running on every known mutation, debounce the folder styling by 200ms
-			if (this.mutationTimeout) {
-				clearTimeout(this.mutationTimeout);
-			}
-			this.mutationTimeout = setTimeout(async () => {
+			this.clearMutationTimeout();
+
+			const win = activeWindow;
+			this.mutationTimeoutWindow = win;
+			this.mutationTimeout = win.setTimeout(async () => {
 				await this.setFolderStyling();
 			}, 200);
 		});
@@ -149,6 +158,14 @@ export default class RainbowColoredSidebar extends Plugin {
 			childList: true,
 			subtree: true,
 		});
+	}
+
+	clearMutationTimeout() {
+		if (this.mutationTimeout === null) return;
+
+		this.mutationTimeoutWindow?.clearTimeout(this.mutationTimeout);
+		this.mutationTimeout = null;
+		this.mutationTimeoutWindow = null;
 	}
 }
 
@@ -218,9 +235,10 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setDesc('List of folders')
 			.addExtraButton((button) => {
+				button.extraSettingsEl.setAttribute('aria-label', 'Add folder');
+				button.extraSettingsEl.setAttribute('title', 'Add folder');
 				button
 					.setIcon('plus')
-					.setTooltip('Add folder')
 					.onClick(() => {
 						this.plugin.settings.folderList.push('');
 						this.display();
@@ -242,9 +260,10 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 					new FolderSuggest(this.app, search.inputEl);
 				})
 				.addExtraButton((button) => {
+					button.extraSettingsEl.setAttribute('aria-label', 'Remove this folder');
+					button.extraSettingsEl.setAttribute('title', 'Remove this folder');
 					button
 						.setIcon('trash')
-						.setTooltip('Remove this folder')
 						.onClick(() => {
 							this.plugin.settings.folderList.splice(i, 1);
 							this.plugin.saveSettings();
