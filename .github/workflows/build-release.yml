@@ -10,11 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      id-token: write
+      attestations: write
+      artifact-metadata: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "22.x"
 
@@ -23,14 +26,24 @@ jobs:
           npm ci
           npm run build
 
+      - name: Package release assets
+        run: zip rainbow-colored-sidebar-${{ github.ref_name }}.zip main.js manifest.json styles.css LICENSE README.md
+
+      - name: Attest release assets
+        uses: actions/attest@v4
+        with:
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
+            rainbow-colored-sidebar-${{ github.ref_name }}.zip
+
       - name: Create release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           tag="${GITHUB_REF#refs/tags/}"
-          
-          zip rainbow-colored-sidebar-${{ github.ref_name }}.zip main.js manifest.json styles.css LICENSE README.md
-          
+
           gh release create "$tag" \
             --title="$tag" \
             --draft \
