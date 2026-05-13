@@ -17,14 +17,17 @@
 	],
 	"author": "Kevin Woblick <mail@woblick.dev>",
 	"license": "MIT",
+	"engines": {
+		"node": "24.x"
+	},
 	"devDependencies": {
-		"@types/node": "^22.13",
-		"@typescript-eslint/eslint-plugin": "^8.24",
-		"@typescript-eslint/parser": "^8.24",
-		"esbuild": "^0.27.3",
+		"@types/node": "^24.12.4",
+		"@typescript-eslint/eslint-plugin": "^8.59.3",
+		"@typescript-eslint/parser": "^8.59.3",
+		"esbuild": "^0.28.0",
 		"esbuild-sass-plugin": "^3.3",
 		"obsidian": "latest",
 		"tslib": "^2.8",
-		"typescript": "^5.7"
+		"typescript": "^6.0.3"
 	}
 }

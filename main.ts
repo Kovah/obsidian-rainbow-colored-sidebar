@@ -14,8 +14,8 @@ const DEFAULT_SETTINGS: RainbowColoredSidebarSettings = {
 };
 
 export default class RainbowColoredSidebar extends Plugin {
-	settings: RainbowColoredSidebarSettings;
-	mutationObserver: MutationObserver;
+	settings: RainbowColoredSidebarSettings = DEFAULT_SETTINGS;
+	mutationObserver: MutationObserver | null = null;
 	mutationTimeout: number | null = null;
 	mutationTimeoutWindow: Window | null = null;
 
