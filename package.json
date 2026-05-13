@@ -21,7 +21,6 @@
 		"@types/node": "^22.13",
 		"@typescript-eslint/eslint-plugin": "^8.24",
 		"@typescript-eslint/parser": "^8.24",
-		"builtin-modules": "^5.0",
 		"esbuild": "^0.27.3",
 		"esbuild-sass-plugin": "^3.3",
 		"obsidian": "latest",

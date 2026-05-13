@@ -264,9 +264,9 @@ class RainbowColoredSidebarSettingTab extends PluginSettingTab {
 					button.extraSettingsEl.setAttribute('title', 'Remove this folder');
 					button
 						.setIcon('trash')
-						.onClick(() => {
+						.onClick(async () => {
 							this.plugin.settings.folderList.splice(i, 1);
-							this.plugin.saveSettings();
+							await this.plugin.saveSettings();
 							this.display();
 						});
 				});
