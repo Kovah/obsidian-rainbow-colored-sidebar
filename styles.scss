@@ -71,7 +71,7 @@ Obsidian Rainbow Colored Sidebar
 /* Loop over all available colors */
 @for $i from 1 through 16 {
 
-	.nav-files-container > div > .nav-folder.rcs-item-#{$i} .nav-folder-title {
+	.nav-files-container .nav-folder.rcs-item-#{$i} .nav-folder-title {
 		color: color-mix(
 				in srgb,
 				var(--rcs-color-#{$i}) var(--rcs-base-color-modifier),
@@ -99,7 +99,7 @@ Obsidian Rainbow Colored Sidebar
 		);
 	}
 
-	.nav-files-container > div > .nav-folder.rcs-item-#{$i} .tree-item-children {
+	.nav-files-container .nav-folder.rcs-item-#{$i} .tree-item-children {
 		--nav-indentation-guide-color: color-mix(
 				in srgb,
 				var(--rcs-color-#{$i}) var(--rcs-indent-color-modifier),
@@ -107,7 +107,7 @@ Obsidian Rainbow Colored Sidebar
 		);
 	}
 
-	.nav-files-container > div > .nav-folder.rcs-item-#{$i} .tree-item-children .nav-file-title {
+	.nav-files-container .nav-folder.rcs-item-#{$i} .tree-item-children .nav-file-title {
 		color: color-mix(
 				in srgb,
 				var(--rcs-color-#{$i}) var(--rcs-base-color-modifier),
