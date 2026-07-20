@@ -5,10 +5,11 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      npm-major:
-        update-types:
-          - "major"
       npm-minor:
         update-types:
           - "minor"
           - "patch"
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - "version-update:semver-major"
