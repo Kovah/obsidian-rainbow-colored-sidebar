@@ -21,8 +21,8 @@
 		"node": "24.x"
 	},
 	"devDependencies": {
-		"@types/node": "^24.12.4",
-		"@typescript-eslint/eslint-plugin": "^8.59.3",
+		"@types/node": "^24.13.3",
+		"@typescript-eslint/eslint-plugin": "^8.67.0",
 		"@typescript-eslint/parser": "^8.59.3",
 		"esbuild": "^0.28.2",
 		"esbuild-sass-plugin": "^3.3",
