@@ -19,6 +19,14 @@ export default class RainbowColoredSidebar extends Plugin {
 	mutationTimeout: number | null = null;
 	mutationTimeoutWindow: Window | null = null;
 
+	// The file explorer always lives in the main vault window, never in a
+	// popped-out window. Settings can open in its own OS window, where
+	// `activeDocument` resolves to the wrong document, so styling writes
+	// silently land on a document the sidebar never renders in.
+	get mainDocument(): Document {
+		return this.app.workspace.containerEl.ownerDocument;
+	}
+
 	async onload() {
 		await this.loadSettings();
 
@@ -37,7 +45,7 @@ export default class RainbowColoredSidebar extends Plugin {
 	onunload() {
 		this.mutationObserver?.disconnect();
 		this.clearMutationTimeout();
-		const doc = activeDocument;
+		const doc = this.mainDocument;
 
 		schemes[this.settings.scheme].colors.forEach((color, index) => {
 			doc.documentElement.style.removeProperty(`--rcs-color-${index + 1}`);
@@ -60,7 +68,7 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	async setColorScheme() {
 		// Add the actual colors as CSS variables to the document root
-		const doc = activeDocument;
+		const doc = this.mainDocument;
 		const newScheme = schemes[this.settings.scheme].colors;
 		newScheme.forEach((color, index) => {
 			doc.documentElement.style.setProperty(`--rcs-color-${index + 1}`, color);
@@ -74,7 +82,7 @@ export default class RainbowColoredSidebar extends Plugin {
 	}
 
 	async setFolderStyling() {
-		const doc = activeDocument;
+		const doc = this.mainDocument;
 		const colorCount = schemes[this.settings.scheme].colors.length;
 
 		// Get all folders from the root path, child folders are not needed here
@@ -127,7 +135,7 @@ export default class RainbowColoredSidebar extends Plugin {
 
 	resetFolderStyling() {
 		// Remove all previously added rcs- classes from items in the file explorer to get a clean state to work with
-		activeDocument.querySelectorAll('.tree-item[class*="rcs-"]').forEach(item => {
+		this.mainDocument.querySelectorAll('.tree-item[class*="rcs-"]').forEach(item => {
 			Array.from(item.classList).filter(cls => cls.startsWith('rcs-'))
 				.forEach(cls => item.classList.remove(cls));
 		});
@@ -140,7 +148,7 @@ export default class RainbowColoredSidebar extends Plugin {
 		this.clearMutationTimeout();
 
 		// Register a new observer on the .nav-files-container node
-		const targetNode = activeDocument.querySelector('.nav-files-container');
+		const targetNode = this.mainDocument.querySelector('.nav-files-container');
 		if (!targetNode) return;
 
 		this.mutationObserver = new MutationObserver(() => {
