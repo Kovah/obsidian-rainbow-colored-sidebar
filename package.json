@@ -1,6 +1,6 @@
 {
 	"name": "rainbow-colored-sidebar",
-	"version": "1.5.4",
+	"version": "1.5.5",
 	"description": "Automatically color your sidebar like a rainbow. No configuration needed. 18 themes included.",
 	"main": "main.js",
 	"scripts": {
